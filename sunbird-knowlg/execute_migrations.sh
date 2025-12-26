@@ -148,6 +148,7 @@ CQL_FILES=(
     "lock_db.cql"
     "dialcodes.cql"
     "content_store.cql"
+    "contentstore.cql"
     "category_store.cql"
     "dialcode_store.cql"
     "hierarchy_store.cql"
