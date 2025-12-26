@@ -1,6 +1,6 @@
-CREATE KEYSPACE IF NOT EXISTS dev_hierarchy_store WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+CREATE KEYSPACE IF NOT EXISTS ${ENV}_hierarchy_store WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
-CREATE TABLE IF NOT EXISTS dev_hierarchy_store.content_hierarchy (
+CREATE TABLE IF NOT EXISTS ${ENV}_hierarchy_store.content_hierarchy (
     identifier text PRIMARY KEY,
     hierarchy text,
     relational_metadata text
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS dev_hierarchy_store.content_hierarchy (
     AND transactions = {'enabled': 'true'};
 
 
-CREATE TABLE IF NOT EXISTS dev_hierarchy_store.framework_hierarchy (
+CREATE TABLE IF NOT EXISTS ${ENV}_hierarchy_store.framework_hierarchy (
     identifier text PRIMARY KEY,
     hierarchy text
 ) WITH bloom_filter_fp_chance = 0.01

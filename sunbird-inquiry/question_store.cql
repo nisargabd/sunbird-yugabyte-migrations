@@ -1,9 +1,9 @@
-CREATE KEYSPACE IF NOT EXISTS dev_question_store WITH replication = {
+CREATE KEYSPACE IF NOT EXISTS ${ENV}_question_store WITH replication = {
   'class': 'SimpleStrategy',
   'replication_factor': '1'
 };
 
-CREATE TABLE IF NOT EXISTS dev_question_store.question_data (
+CREATE TABLE IF NOT EXISTS ${ENV}_question_store.question_data (
   identifier text,
   body blob,
   editorState text,

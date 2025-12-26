@@ -1,7 +1,7 @@
-CREATE KEYSPACE IF NOT EXISTS dev_dialcode_store WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+CREATE KEYSPACE IF NOT EXISTS ${ENV}_dialcode_store WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
 
-CREATE TABLE IF NOT EXISTS dev_dialcode_store.publisher (
+CREATE TABLE IF NOT EXISTS ${ENV}_dialcode_store.publisher (
     identifier text PRIMARY KEY,
     channel text,
     created_on text,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS dev_dialcode_store.publisher (
     AND transactions = {'enabled': 'true'};
 
 
-CREATE TABLE IF NOT EXISTS dev_dialcode_store.dial_code (
+CREATE TABLE IF NOT EXISTS ${ENV}_dialcode_store.dial_code (
     identifier text PRIMARY KEY,
     batchcode text,
     channel text,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS dev_dialcode_store.dial_code (
     AND speculative_retry = '99PERCENTILE'
     AND transactions = {'enabled': 'true'};
 
-CREATE TABLE IF NOT EXISTS dev_dialcode_store.system_config (
+CREATE TABLE IF NOT EXISTS ${ENV}_dialcode_store.system_config (
     prop_key text PRIMARY KEY,
     prop_value text
 ) WITH bloom_filter_fp_chance = 0.01

@@ -1,9 +1,9 @@
-CREATE KEYSPACE IF NOT EXISTS dev_category_store WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+CREATE KEYSPACE IF NOT EXISTS ${ENV}_script_store WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
-CREATE TABLE IF NOT EXISTS dev_category_store.category_definition_data (
-    identifier text PRIMARY KEY,
-    forms map<text, text>,
-    objectmetadata map<text, text>
+CREATE TABLE IF NOT EXISTS ${ENV}_script_store.script_data (
+    name text PRIMARY KEY,
+    reqmap text,
+    type text
 ) WITH bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
     AND comment = ''

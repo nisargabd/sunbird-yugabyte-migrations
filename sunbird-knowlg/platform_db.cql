@@ -1,9 +1,9 @@
-CREATE KEYSPACE IF NOT EXISTS dev_platform_db WITH replication = {
+CREATE KEYSPACE IF NOT EXISTS ${ENV}_platform_db WITH replication = {
   'class': 'SimpleStrategy',
   'replication_factor': '1'
 };
 
-CREATE TABLE IF NOT EXISTS dev_platform_db.job_request (
+CREATE TABLE IF NOT EXISTS ${ENV}_platform_db.job_request (
     client_key text,
     request_id text,
     job_id text,

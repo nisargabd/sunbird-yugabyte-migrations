@@ -5,6 +5,23 @@
 # Executes all CQL files in the sunbird-knowlg folder
 #####################################################
 
+# Usage function
+usage() {
+    echo "Usage: $0 [ENVIRONMENT]"
+    echo "  ENVIRONMENT: Environment prefix for CQL files (e.g., dev, sb, prod)"
+    echo "               Default: dev"
+    echo ""
+    echo "Examples:"
+    echo "  $0           # Uses 'dev' as environment"
+    echo "  $0 dev       # Uses 'dev' as environment"
+    echo "  $0 sb        # Uses 'sb' as environment"
+    echo "  $0 prod      # Uses 'prod' as environment"
+    exit 1
+}
+
+# Get environment from parameter or use default
+ENVIRONMENT="${1:-dev}"
+
 # Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -62,14 +79,21 @@ execute_cql_file() {
     
     print_message "${YELLOW}" "Processing: ${filename}"
     
+    # Create temp file and replace ${ENV} with actual environment
+    local temp_file="${SCRIPT_DIR}/.tmp_${filename}"
+    sed "s/\${ENV}/${ENVIRONMENT}/g" "${cql_file}" > "${temp_file}"
+    
     # Execute the CQL file using ycqlsh
     set +e  # Disable exit on error for this command
     ycqlsh "${YCQLSH_HOST}" "${YCQLSH_PORT}" \
         -u "${YCQLSH_USERNAME}" \
         -p "${YCQLSH_PASSWORD}" \
-        -f "${cql_file}" >> "${LOG_FILE}" 2>&1
+        -f "${temp_file}" >> "${LOG_FILE}" 2>&1
     local exit_code=$?
     set -e  # Re-enable exit on error
+    
+    # Clean up temp file
+    rm -f "${temp_file}"
     
     if [ $exit_code -eq 0 ]; then
         print_message "${GREEN}" "✓ SUCCESS: ${filename} executed successfully"
@@ -90,6 +114,7 @@ execute_cql_file() {
 print_header "YugabyteDB CQL Migration Script - sunbird-knowlg"
 
 print_message "${BLUE}" "Configuration:"
+echo "  Environment: ${ENVIRONMENT}"
 echo "  Host: ${YCQLSH_HOST}"
 echo "  Port: ${YCQLSH_PORT}"
 echo "  Username: ${YCQLSH_USERNAME}"
@@ -123,12 +148,11 @@ CQL_FILES=(
     "lock_db.cql"
     "dialcodes.cql"
     "content_store.cql"
-    "dev_category_store.cql"
-    "dev_content_store.cql"
-    "dev_dialcode_store.cql"
-    "dev_hierarchy_store.cql"
-    "dev_platform_db.cql"
-    "dev_script_store.cql"
+    "category_store.cql"
+    "dialcode_store.cql"
+    "hierarchy_store.cql"
+    "platform_db.cql"
+    "script_store.cql"
 )
 
 print_header "Starting CQL File Execution"
