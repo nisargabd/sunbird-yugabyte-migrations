@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS sunbird_courses.content_consumption (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99PERCENTILE'
     AND transactions = {'enabled': 'true'};
-CREATE INDEX inx_cc_status ON sunbird_courses.content_consumption (status);
+CREATE INDEX IF NOT EXISTS inx_cc_status ON sunbird_courses.content_consumption (status);
 
 CREATE TABLE IF NOT EXISTS sunbird_courses.cassandra_migration_version (
     version text PRIMARY KEY,
@@ -297,7 +297,7 @@ CREATE TABLE IF NOT EXISTS sunbird_courses.bulk_upload_process (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99PERCENTILE'
     AND transactions = {'enabled': 'true'};
-CREATE INDEX inx_bup_status ON sunbird_courses.bulk_upload_process (status);
+CREATE INDEX IF NOT EXISTS inx_bup_status ON sunbird_courses.bulk_upload_process (status);
 
 CREATE TABLE IF NOT EXISTS sunbird_courses.user_content_consumption (
     userid text,
@@ -370,5 +370,5 @@ CREATE TABLE IF NOT EXISTS sunbird_courses.user_courses (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99PERCENTILE'
     AND transactions = {'enabled': 'true'};
-CREATE INDEX inx_ucs_status ON sunbird_courses.user_courses (status);
+CREATE INDEX IF NOT EXISTS inx_ucs_status ON sunbird_courses.user_courses (status);
 
