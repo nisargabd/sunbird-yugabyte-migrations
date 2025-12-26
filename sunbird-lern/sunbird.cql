@@ -1025,7 +1025,7 @@ CREATE TABLE IF NOT EXISTS sunbird.usr_external_identity (
     AND transactions = {'enabled': 'true'};
 CREATE INDEX IF NOT EXISTS inx_usrextid_user_id ON sunbird.usr_external_identity (userid);
 
-CREATE TABLE sunbird.tenant_preference_v2 (
+CREATE TABLE IF NOT EXISTS sunbird.tenant_preference_v2 (
     orgid text,
     key text,
     createdby text,
